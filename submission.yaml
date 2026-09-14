@@ -12,8 +12,8 @@ team:
   name: "The Atreides"                 # REQUIRED — e.g., "Orion Squad"
   track: "AI"                          # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
-    name: "Lead Name"                  # REQUIRED — e.g., "Alice Chen"
-    email: "lead@example.com"          # REQUIRED — e.g., "alice.chen@ibm.com"
+    name: "Krina Parikh"               # REQUIRED — e.g., "Alice Chen"
+    email: "krinaparikh227@gmail.com"  # REQUIRED — e.g., "alice.chen@ibm.com"
   members:
     - name: "Member One"               # REQUIRED — Team member 1
       email: "member1@example.com"
@@ -21,32 +21,33 @@ team:
       email: "member2@example.com"
 
 submission:
-  title: "Atreides Food Recommendation System"  # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
+  title: "Drug Safety Signal Detector & Regulatory Checker"  # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
 
   problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-    Users struggle to find personalized food recommendations that align with their specific dietary needs and preferences. This leads to decision fatigue and poor nutritional choices.
+    FDA's FAERS database has 20M+ adverse event reports, making manual signal detection impossible. Separately, manual review of 100,000+ page CTD dossiers often leads to missed sections, costing pharma companies 6–12 months and $50–100M in delays. Both problems share a root cause: too much complex data for manual review.
 
   solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-    We built an ML-powered food recommendation engine that uses watsonx.ai to analyze user preferences and generate highly personalized meal suggestions. The system learns from feedback to continuously improve its accuracy.
+    We built an IBM Bob solution featuring two modes: Signal Detection (clustering adverse event reports and calculating PRR statistics to flag emerging safety signals) and Submission Readiness (checking dossier outlines against ICH M4 CTD requirements and generating gap reports).
 
   key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - "Personalized meal recommendations based on user profiles"
-    - "Natural language interaction using IBM Bob"
-    - "Real-time dietary restriction filtering"
-    - "Nutritional analysis powered by watsonx.ai"
+    - "Automated clustering of adverse event reports from FAERS"
+    - "Proportional Reporting Ratio (PRR) calculation for early signal detection"
+    - "Automated dossier verification against ICH M4 CTD requirements"
+    - "Completeness scoring and actionable gap report generation"
+    - "Conversational data interaction and querying via IBM Bob"
 
   tech_stack:
     languages: ["Python", "JavaScript"] # REQUIRED — e.g., ["Python", "TypeScript"]
     frameworks: ["FastAPI", "React"]    # e.g., ["FastAPI", "React"]
     ibm_technologies: ["watsonx.ai", "IBM Bob"] # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
     databases: ["PostgreSQL"]           # e.g., ["PostgreSQL", "Redis"]
-    other: ["Docker"]                   # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    other: ["Docker", "Pandas", "Scikit-Learn"] # e.g., ["Docker", "GitHub Actions", "Slack API"]
 
   what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    We are most proud of the seamless integration with watsonx.ai, which allows for complex reasoning over user dietary constraints in real-time.
+    We are most proud of effectively combining robust statistical methods (PRR) with advanced NLP (IBM Bob & watsonx.ai) to solve two highly critical, data-heavy problems in the pharmaceutical industry in a single unified interface.
 
   known_limitations: >                 # Optional but recommended — be honest about gaps
-    The current database of recipes is limited to North American cuisine and requires expansion.
+    The dossier checking currently focuses on structure and outline completeness against ICH M4 CTD, but does not yet deep-read the full textual content of all 100,000+ pages for semantic contradictions.
 
 # =============================================================================
 # ARTIFACT LOCATIONS

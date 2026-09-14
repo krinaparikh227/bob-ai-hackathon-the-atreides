@@ -1,4 +1,4 @@
-# 🚀 Atreides Food Recommendation System
+# 🚀 Drug Safety Signal Detector & Regulatory Submission Readiness Checker
 
 ---
 
@@ -8,29 +8,30 @@
 |---|---|
 | **Team Name** | The Atreides |
 | **Track** | AI |
-| **Team Lead** | Lead Name — lead@example.com |
+| **Team Lead** | Krina Parikh — krinaparikh227@gmail.com |
 | **Members** | Member One, Member Two |
 
 ---
 
 ## 🎯 Problem Statement
 
-Users struggle to find personalized food recommendations that align with their specific dietary needs and preferences. This leads to decision fatigue and poor nutritional choices, making it difficult to maintain a healthy lifestyle.
+The FDA's FAERS database contains over 20M+ adverse event reports. Historically, signals for dangerous drugs (like Vioxx, which caused 27,000+ heart attacks) were missed due to sheer volume. Separately, drug approval CTD dossiers span 100,000+ pages across 5 modules — a single missing section can cause rejection, costing companies 6–12 months and $50–100M. Both critical problems share the exact same root cause: too much complex data for manual review.
 
 ---
 
 ## 💡 Solution
 
-We built an ML-powered food recommendation engine that uses watsonx.ai to analyze user preferences and generate highly personalized meal suggestions. The system learns from feedback to continuously improve its accuracy and provides an intuitive natural language interface via IBM Bob.
+We built an IBM Bob-integrated solution with two powerful modes. **(1) Signal Detection:** Automatically clusters adverse event reports and calculates Proportional Reporting Ratio (PRR) statistics to flag emerging safety signals. **(2) Submission Readiness:** Automatically checks a dossier outline against ICH M4 CTD requirements, scores completeness per module, and generates an actionable gap report.
 
 ---
 
 ## ✨ Key Features
 
-- **Feature 1:** Personalized meal recommendations based on user profiles
-- **Feature 2:** Natural language interaction using IBM Bob
-- **Feature 3:** Real-time dietary restriction filtering
-- **Feature 4:** Nutritional analysis powered by watsonx.ai
+- **Feature 1:** Automated clustering of adverse event reports from the FAERS database.
+- **Feature 2:** Proportional Reporting Ratio (PRR) statistical calculation for early signal detection.
+- **Feature 3:** Automated dossier outline verification against ICH M4 CTD requirements.
+- **Feature 4:** Completeness scoring and gap report generation per CTD module.
+- **Feature 5:** Natural language conversational interface via IBM Bob for data interaction.
 
 ---
 
@@ -42,7 +43,7 @@ We built an ML-powered food recommendation engine that uses watsonx.ai to analyz
 | **Frameworks** | FastAPI, React |
 | **IBM Technologies** | watsonx.ai, IBM Bob |
 | **Databases** | PostgreSQL |
-| **Other** | Docker |
+| **Other** | Docker, Pandas, Scikit-Learn |
 
 ---
 
@@ -72,7 +73,6 @@ git clone https://github.com/krinaparikh227/bob-ai-hackathon-the-atreides.git
 cd bob-ai-hackathon-the-atreides
 
 # 2. Install dependencies
-# Assuming backend in src/backend
 cd src/backend
 pip install -r requirements.txt
 
@@ -99,14 +99,13 @@ uvicorn main:app --reload
 
 ## ⚠️ Known Limitations
 
-- Authentication is currently mocked for the hackathon demo.
-- The recipe database is limited to North American cuisine.
-- Model latency can spike during cold starts.
+- The dossier checking currently focuses on structure and outline completeness against ICH M4 CTD, but does not yet deep-read the full textual content of all 100,000+ pages for semantic contradictions.
+- PRR calculations are computationally heavy and currently unoptimized for the full 20M+ FAERS dataset in real-time.
 
 ---
 
 ## 🏅 What We're Most Proud Of
 
-We are most proud of the seamless integration with watsonx.ai, which allows for complex reasoning over user dietary constraints in real-time, providing immediate and highly relevant meal suggestions.
+We are most proud of effectively combining robust statistical methods (PRR) with advanced NLP (IBM Bob & watsonx.ai) to solve two highly critical, data-heavy problems in the pharmaceutical industry in a single unified interface.
 
 ---

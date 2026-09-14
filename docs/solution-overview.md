@@ -2,15 +2,21 @@
 
 ## What We Built
 
-We built the Atreides Food Recommendation System, an intelligent dietary assistant that helps users discover meals tailored to their specific health goals, taste preferences, and dietary restrictions. The system uses natural language processing to understand complex user requests and machine learning to rank the best food options available.
+We built a dual-mode IBM Bob solution specifically designed to handle the massive data complexities in the pharmaceutical lifecycle. It acts as both a **Drug Safety Signal Detector** and a **Regulatory Submission Readiness Checker**. 
 
 ## How It Works
 
-1. User creates a profile specifying dietary restrictions (e.g., vegan, gluten-free) and health goals.
-2. User interacts with the system via a natural language chat interface (powered by IBM Bob) to request meal ideas or specify current cravings/constraints (e.g., "I need a quick high-protein lunch under 400 calories").
-3. The system processes the request and queries a PostgreSQL database of recipes.
-4. The watsonx.ai model analyzes the recipes against the user's constraints and scores them for relevance and compliance.
-5. The top recommendations are presented to the user, who can provide feedback to improve future suggestions.
+**Mode 1: Signal Detection**
+1. The system ingests structured and unstructured adverse event reports from the FDA's FAERS database.
+2. watsonx.ai is used to cluster similar unstructured narratives and map them to standardized medical dictionaries (MedDRA).
+3. The backend calculates the Proportional Reporting Ratio (PRR) for drug-event pairs to statistically flag emerging safety signals.
+4. Alerts are surfaced via the IBM Bob conversational interface for pharmacovigilance teams to review.
+
+**Mode 2: Submission Readiness**
+1. Users upload their draft CTD (Common Technical Document) dossier outlines.
+2. The system parses the 5 modules and checks the hierarchy and presence of sections against strict ICH M4 CTD requirements.
+3. The backend scores the completeness of each module.
+4. A detailed, actionable gap report is generated, highlighting exactly which required sections are missing or structurally invalid.
 
 ## Architecture Diagram
 
@@ -19,18 +25,18 @@ We built the Atreides Food Recommendation System, an intelligent dietary assista
 ```
 [User] → [React Frontend] → [IBM Bob Interface] → [FastAPI Backend] → [watsonx.ai]
                                                         ↓
-                                                 [PostgreSQL DB]
+                                       [FAERS DB & CTD Rules (PostgreSQL)]
 ```
 
 ## Key Design Decisions
 
 | Decision | Rationale |
 |---|---|
-| Used watsonx.ai for recipe scoring | Pre-trained models provided excellent natural language understanding of complex ingredient lists and dietary rules out-of-the-box. |
-| Integrated IBM Bob for conversational UI | Reduced friction for the user; they don't have to fill out complex search forms, just state what they want naturally. |
-| FastAPI for the backend | High performance, built-in async support, and auto-generated API documentation (Swagger). |
+| Dual-mode architecture | Both problems (pharmacovigilance and regulatory submission) share the same root challenge: processing overwhelming amounts of complex text. Combining them showcases the versatility of the AI engine. |
+| PRR Statistical Calculation | PRR is an industry-standard method for disproportionate reporting analysis; pairing it with AI clustering vastly reduces false positives. |
+| IBM Bob as the core UI | Allows users to simply ask "What are the gaps in Module 3?" or "Show me emerging signals for Drug X" rather than navigating complex analytical dashboards. |
 
 ## IBM Technologies Used
 
-- **watsonx.ai:** Used the Granite series models via the Python SDK to classify ingredient compatibility with dietary constraints and to generate engaging descriptions for the recommended meals.
-- **IBM Bob:** Integrated as the primary conversational agent to handle user intent recognition and manage the dialogue flow.
+- **watsonx.ai:** Used to perform NLP clustering on unstructured FAERS adverse event narratives and to parse complex structural rules for the CTD dossiers.
+- **IBM Bob:** Serves as the natural language interface, allowing users to query signal detection statistics and request gap reports seamlessly.

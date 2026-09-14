@@ -2,55 +2,58 @@
 
 ## System Architecture
 
-Our system architecture is designed for low latency and high scalability, leveraging modern web frameworks and robust AI inference.
+Our architecture handles heavy data ingestion and processing, bridging structured statistical analysis with NLP.
 
 ```mermaid
 graph TD
     A[User Browser] -->|React App| B[Frontend]
-    B -->|REST API| C[FastAPI Backend]
-    B -->|WebSocket| D[IBM Bob CLI/Chat]
-    D -->|Chat Intent| C
-    C -->|API SDK| E[watsonx.ai]
-    C -->|SQL Queries| F[PostgreSQL DB]
-    E -->|Scored Recipes| C
-    F -->|Recipe Data| C
-    C -->|JSON Response| B
+    B -->|WebSocket| C[IBM Bob Chat]
+    C -->|Natural Language Intent| D[FastAPI Backend]
+    
+    subgraph Signal Detection Mode
+    D -->|Query FAERS| E[PostgreSQL - FAERS DB]
+    D -->|Text Clustering| F[watsonx.ai]
+    D -->|PRR Calculation| G[Statistical Engine]
+    end
+    
+    subgraph Submission Readiness Mode
+    D -->|Parse Dossier| H[Document Parser]
+    H -->|Validate Structure| I[ICH M4 CTD Rules Engine]
+    I -->|Score & Gap Analysis| J[Report Generator]
+    end
+    
+    G -->|Alerts| D
+    J -->|Gap Report| D
+    D -->|JSON/Markdown| B
 ```
 
 ## Components
 
 | Component | Technology | Responsibility |
 |---|---|---|
-| Frontend | React 18 | Dashboard UI, user preference forms, rendering recommended meal cards |
-| Backend API | FastAPI | Business logic, handling user intents, orchestration of ML and DB calls |
-| Chat Interface | IBM Bob | Managing conversation state and natural language understanding for user queries |
-| ML Engine | watsonx.ai | Scoring recipes against user dietary constraints and generating reasoning |
-| Database | PostgreSQL | Storing recipe datasets, user profiles, and historical feedback |
+| Frontend | React 18 | Dashboard UI, data visualization for signals, and gap report rendering |
+| Backend API | FastAPI | Orchestration of modes, running PRR calculations, handling file uploads |
+| Chat Interface | IBM Bob | Managing user requests (e.g., "Analyze drug X", "Check dossier Y") |
+| ML Engine | watsonx.ai | Clustering unstructured FAERS narratives |
+| Database | PostgreSQL | Storing the massive FAERS dataset and the ICH M4 CTD rule hierarchy |
 
 ## Data Flow
 
-Data flows seamlessly from the user to the database and back, enriched by AI at the core:
-
-1. The user inputs a query (e.g., "I want a vegan dinner") via the IBM Bob chat interface embedded in the React frontend.
-2. The frontend sends the parsed intent to the FastAPI backend.
-3. The backend retrieves the user's stored profile (dietary restrictions, allergies) from PostgreSQL.
-4. The backend pulls a candidate set of recipes from PostgreSQL based on basic tags.
-5. The backend formats a prompt containing the candidate recipes and user profile, sending it to the watsonx.ai inference endpoint.
-6. watsonx.ai returns a scored list of recipes with natural language reasoning (e.g., "This tofu stir-fry is perfect because it's vegan and high in protein").
-7. The backend returns the final JSON to the frontend for display.
+1. **Signal Detection:** 
+   - FAERS data is continuously ingested into PostgreSQL.
+   - Background tasks run PRR calculations. 
+   - When a user asks IBM Bob about a drug, the backend fetches PRR scores and uses watsonx.ai to cluster the underlying narratives to explain the signal.
+2. **Submission Readiness:**
+   - A user uploads a dossier outline (e.g., JSON or structured text).
+   - The FastAPI backend parses the outline against the ICH M4 rules stored in the DB.
+   - A completeness score is generated and passed back to the frontend alongside a detailed gap report.
 
 ## Security Considerations
 
-Security is built-in from the ground up:
-
-- API keys for watsonx.ai and database credentials are stored exclusively in environment variables and are never committed to version control.
-- All backend routes are protected and validate incoming payloads using Pydantic models.
-- User profiles are pseudonymized, minimizing PII exposure.
+- CTD Dossiers are highly confidential. Uploaded outlines are processed entirely in memory and are never persisted to disk or external logs.
+- API keys for watsonx.ai are stored securely in environment variables.
 
 ## Scalability Notes
 
-The prototype is designed to scale:
-
-- The FastAPI backend is entirely stateless, allowing it to be horizontally scaled behind a load balancer.
-- PostgreSQL connections are managed via a connection pool (e.g., PgBouncer) to handle high concurrency.
-- Future versions will implement Redis caching for frequent queries (e.g., "popular vegan breakfasts") to reduce the load on the watsonx.ai endpoints.
+- Calculating PRR across 20M+ records is computationally expensive. We utilize materialized views in PostgreSQL to pre-aggregate adverse event counts by drug.
+- The document parser is designed to handle 100,000+ page structures by processing them in chunks using async workers.

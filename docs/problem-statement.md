@@ -2,20 +2,24 @@
 
 ## Background
 
-In the health and wellness domain, finding personalized nutrition plans is critical for maintaining a healthy lifestyle. However, people have highly variable dietary restrictions, health goals, and taste preferences that change over time.
+The pharmaceutical industry operates with massive amounts of complex data during both post-market surveillance (pharmacovigilance) and pre-market approval (regulatory submissions). The FDA's FAERS (Adverse Event Reporting System) database contains over 20 million adverse event reports. Separately, a standard drug approval CTD (Common Technical Document) dossier spans over 100,000 pages across 5 dense modules.
 
 ## The Problem
 
-Users struggle to find personalized food recommendations that align with their specific dietary needs and preferences on a daily basis. They spend an average of 30 minutes each day searching for recipes, checking ingredients, and planning meals, leading to decision fatigue and ultimately, poor nutritional choices.
+Both of these areas suffer from a shared root cause: there is simply too much complex data for manual review. 
+1. **Signal Detection:** Critical safety signals get buried in the noise of 20M+ reports. Historically, drugs like Vioxx caused over 27,000 heart attacks before the safety signal was acted upon.
+2. **Submission Readiness:** Manually reviewing a 100,000+ page dossier is error-prone. A single missing section or structural error against the ICH M4 CTD requirements can result in an immediate rejection by regulatory bodies.
 
 ## Who is Affected
 
-Individuals looking to maintain or improve their health through diet, specifically busy professionals and individuals managing chronic health conditions (like diabetes or celiac disease) who need strict adherence to dietary guidelines without sacrificing flavor.
+- **Pharmacovigilance Teams / Regulators:** Tasked with identifying dangerous drug side effects early, but overwhelmed by unstructured data.
+- **Regulatory Affairs Teams (Pharma):** Responsible for assembling and checking massive dossiers before submission.
 
 ## Why It Matters
 
-The cost of this problem includes wasted time, increased stress around meal planning, and long-term negative health impacts from abandoning restrictive but necessary diets. This friction often causes users to resort to fast food or non-compliant meals.
+- **Human Cost:** Delayed signal detection leads directly to severe patient harm and loss of life.
+- **Financial Cost:** A rejected CTD dossier costs pharmaceutical companies 6 to 12 months in delays, which translates to $50M to $100M in lost revenue and extended development costs.
 
 ## Why Existing Solutions Fall Short
 
-Current solutions are either static recipe apps that don't adapt to user feedback or rigid meal planning services that lack personalization. They do not leverage real-time natural language interaction or complex reasoning to accommodate immediate changes in a user's constraints (e.g., "I only have 15 minutes and I'm out of eggs").
+Current solutions rely on manual review aided by basic keyword searches or siloed statistical tools. They lack the ability to intelligently cluster unstructured adverse event narratives and automatically verify massive document hierarchies against complex regulatory rules in a single, unified workflow.
