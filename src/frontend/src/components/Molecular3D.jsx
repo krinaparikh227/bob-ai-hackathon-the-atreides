@@ -1,0 +1,266 @@
+/* ── DrugSafe AI Interactive 3D Pharmaceutical Molecular & Security Lattice ──
+ * Matches: stitch_drugsafe_ai_ui_prototype/three.js/code.html & drugsafe_ai_login_access_portal/code.html
+ */
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+
+export default function Molecular3D({ className = 'w-full h-[420px]' }) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const width = container.clientWidth || 600;
+    const height = container.clientHeight || 420;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+    camera.position.set(0, 0, 18);
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    container.appendChild(renderer.domElement);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+    scene.add(ambientLight);
+
+    const dirLight1 = new THREE.DirectionalLight(0x2563eb, 1.4);
+    dirLight1.position.set(10, 15, 10);
+    scene.add(dirLight1);
+
+    const dirLight2 = new THREE.DirectionalLight(0x60a5fa, 0.9);
+    dirLight2.position.set(-10, -10, 10);
+    scene.add(dirLight2);
+
+    // Main Master Group
+    const group = new THREE.Group();
+    scene.add(group);
+
+    // 1. Central Biopharmaceutical Molecular Cluster
+    const coreGroup = new THREE.Group();
+    group.add(coreGroup);
+
+    const sphereMatPrimary = new THREE.MeshPhongMaterial({
+      color: 0x1d4ed8,
+      shininess: 90,
+      specular: 0x93c5fd,
+    });
+
+    const sphereMatCyan = new THREE.MeshPhongMaterial({
+      color: 0x0284c7,
+      shininess: 80,
+      specular: 0xbae6fd,
+    });
+
+    const sphereMatLight = new THREE.MeshPhongMaterial({
+      color: 0x3b82f6,
+      shininess: 70,
+      specular: 0xffffff,
+    });
+
+    const bondMat = new THREE.MeshLambertMaterial({
+      color: 0x93c5fd,
+      transparent: true,
+      opacity: 0.85,
+    });
+
+    // Molecular Nodes (Pharmacological active compound core)
+    const atomPositions = [
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(2.2, 1.2, 0.8),
+      new THREE.Vector3(-2.0, 1.4, -0.6),
+      new THREE.Vector3(1.8, -1.8, 1.2),
+      new THREE.Vector3(-1.9, -1.5, -0.9),
+      new THREE.Vector3(0, 2.5, -1.2),
+      new THREE.Vector3(0, -2.6, 0.6),
+      new THREE.Vector3(3.6, -0.4, -1.1),
+      new THREE.Vector3(-3.5, 0.2, 1.3),
+      new THREE.Vector3(1.5, 3.2, 1.1),
+      new THREE.Vector3(-1.6, -3.1, 1.4),
+    ];
+
+    const atomMeshes = [];
+    atomPositions.forEach((pos, idx) => {
+      const radius = idx === 0 ? 1.05 : 0.55 + (idx % 3) * 0.12;
+      const geom = new THREE.SphereGeometry(radius, 28, 28);
+      const mat = idx % 3 === 0 ? sphereMatPrimary : idx % 3 === 1 ? sphereMatCyan : sphereMatLight;
+      const mesh = new THREE.Mesh(geom, mat);
+      mesh.position.copy(pos);
+      coreGroup.add(mesh);
+      atomMeshes.push({ mesh, basePos: pos.clone(), seed: idx * 1.3 });
+    });
+
+    // Molecular Bonds (Cylinders connecting nodes)
+    const connections = [
+      [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6],
+      [1, 7], [2, 8], [5, 9], [6, 10], [1, 5], [3, 6],
+    ];
+
+    function createBond(p1, p2) {
+      const distance = p1.distanceTo(p2);
+      const geom = new THREE.CylinderGeometry(0.09, 0.09, distance, 12);
+      const bond = new THREE.Mesh(geom, bondMat);
+      const mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
+      bond.position.copy(mid);
+      bond.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), p2.clone().sub(p1).normalize());
+      return bond;
+    }
+
+    connections.forEach((conn) => {
+      const b = createBond(atomPositions[conn[0]], atomPositions[conn[1]]);
+      coreGroup.add(b);
+    });
+
+    // 2. Orbital Protective Safety Rings
+    const ringGroup = new THREE.Group();
+    group.add(ringGroup);
+
+    const ringMat1 = new THREE.MeshStandardMaterial({
+      color: 0x2563eb,
+      roughness: 0.3,
+      metalness: 0.1,
+      transparent: true,
+      opacity: 0.6,
+    });
+
+    const ringMat2 = new THREE.MeshStandardMaterial({
+      color: 0x38bdf8,
+      roughness: 0.4,
+      metalness: 0.1,
+      transparent: true,
+      opacity: 0.45,
+    });
+
+    const ringGeom1 = new THREE.TorusGeometry(6.2, 0.05, 16, 100);
+    const ring1 = new THREE.Mesh(ringGeom1, ringMat1);
+    ring1.rotation.x = Math.PI / 3;
+    ring1.rotation.y = Math.PI / 6;
+    ringGroup.add(ring1);
+
+    const ringGeom2 = new THREE.TorusGeometry(7.0, 0.04, 16, 100);
+    const ring2 = new THREE.Mesh(ringGeom2, ringMat2);
+    ring2.rotation.x = -Math.PI / 4;
+    ring2.rotation.z = Math.PI / 5;
+    ringGroup.add(ring2);
+
+    // Satellite electron data nodes along rings
+    const satelliteGroup = new THREE.Group();
+    group.add(satelliteGroup);
+    const satMat = new THREE.MeshPhongMaterial({ color: 0x1d4ed8, emissive: 0x1e40af, emissiveIntensity: 0.4 });
+    const sat1 = new THREE.Mesh(new THREE.SphereGeometry(0.28, 16, 16), satMat);
+    const sat2 = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 16), satMat);
+    satelliteGroup.add(sat1);
+    satelliteGroup.add(sat2);
+
+    // 3. Surrounding Floating Precision Particles (ICH/GxP data points)
+    const particleCount = 65;
+    const partGeom = new THREE.BufferGeometry();
+    const partPositions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      partPositions[i] = (Math.random() - 0.5) * 22;
+      partPositions[i + 1] = (Math.random() - 0.5) * 22;
+      partPositions[i + 2] = (Math.random() - 0.5) * 14;
+    }
+    partGeom.setAttribute('position', new THREE.BufferAttribute(partPositions, 3));
+    const partMat = new THREE.PointsMaterial({
+      color: 0x60a5fa,
+      size: 0.18,
+      transparent: true,
+      opacity: 0.65,
+    });
+    const particles = new THREE.Points(partGeom, partMat);
+    group.add(particles);
+
+    // Interactive mouse reaction
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    function handleMouseMove(e) {
+      const rect = container.getBoundingClientRect();
+      mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouseY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+    }
+
+    container.addEventListener('mousemove', handleMouseMove);
+
+    // Resize handling
+    function handleResize() {
+      if (!container) return;
+      const w = container.clientWidth || 600;
+      const h = container.clientHeight || 420;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    // Animation Loop
+    let animId;
+    const clock = new THREE.Clock();
+
+    function animate() {
+      animId = requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      // Smooth mouse damping
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
+
+      // Gentle floating rotation
+      group.rotation.y = t * 0.28 + targetX * 0.45;
+      group.rotation.x = Math.sin(t * 0.2) * 0.15 - targetY * 0.35;
+      group.position.y = Math.sin(t * 0.7) * 0.35;
+
+      // Individual atom subtle oscillation (breathing molecule)
+      atomMeshes.forEach((item) => {
+        const s = item.seed;
+        item.mesh.position.x = item.basePos.x + Math.sin(t * 1.5 + s) * 0.08;
+        item.mesh.position.y = item.basePos.y + Math.cos(t * 1.4 + s) * 0.08;
+        item.mesh.position.z = item.basePos.z + Math.sin(t * 1.2 + s) * 0.08;
+      });
+
+      // Orbital rings independent counter-rotations
+      ring1.rotation.z = t * 0.35;
+      ring2.rotation.y = -t * 0.42;
+
+      // Satellite positions orbiting
+      sat1.position.x = Math.cos(t * 0.9) * 6.2;
+      sat1.position.y = Math.sin(t * 0.9) * Math.cos(Math.PI / 3) * 6.2;
+      sat1.position.z = Math.sin(t * 0.9) * Math.sin(Math.PI / 3) * 6.2;
+
+      sat2.position.x = Math.cos(-t * 0.7) * 7.0;
+      sat2.position.z = Math.sin(-t * 0.7) * 7.0;
+      sat2.position.y = Math.sin(t * 0.7) * 2.5;
+
+      particles.rotation.y = t * 0.06;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      container.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      if (renderer.domElement && renderer.domElement.parentNode) {
+        renderer.domElement.parentNode.removeChild(renderer.domElement);
+      }
+      renderer.dispose();
+    };
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className={`relative overflow-hidden cursor-grab active:cursor-grabbing ${className}`}
+      style={{ minHeight: '380px' }}
+    />
+  );
+}
