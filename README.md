@@ -1,5 +1,5 @@
 # Drug Safety Signal Detector & Regulatory Submission Readiness Checker
-## Atreides / PharmaSafe Intelligence Platform
+## Atreides Intelligence Platform
 
 ---
 
