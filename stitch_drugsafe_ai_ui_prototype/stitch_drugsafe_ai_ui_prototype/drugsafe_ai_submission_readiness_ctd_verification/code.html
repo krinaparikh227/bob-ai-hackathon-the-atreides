@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DrugSafe AI - Submission Readiness &amp; CTD Gap Analysis</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS & Configuration -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#c4c5d7",
+            "tertiary": "#004f35",
+            "primary": "#0037b0",
+            "surface-container-high": "#dce9ff",
+            "on-primary-fixed-variant": "#0039b5",
+            "on-error": "#ffffff",
+            "background": "#f8f9ff",
+            "outline": "#747686",
+            "surface-container-lowest": "#ffffff",
+            "primary-container": "#1d4ed8",
+            "surface-tint": "#2151da",
+            "primary-fixed-dim": "#b7c4ff",
+            "secondary-container": "#5bb8fe",
+            "on-tertiary-fixed-variant": "#005137",
+            "surface-dim": "#cbdbf5",
+            "inverse-on-surface": "#eaf1ff",
+            "on-secondary-fixed": "#001d31",
+            "surface-container-highest": "#d3e4fe",
+            "error-container": "#ffdad6",
+            "surface-bright": "#f8f9ff",
+            "on-primary": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "secondary-fixed-dim": "#93ccff",
+            "on-primary-container": "#cad3ff",
+            "error": "#ba1a1a",
+            "surface-container": "#e5eeff",
+            "on-background": "#0b1c30",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed": "#002114",
+            "surface": "#f8f9ff",
+            "tertiary-fixed-dim": "#68dba9",
+            "on-tertiary-container": "#76eab6",
+            "secondary-fixed": "#cce5ff",
+            "inverse-surface": "#213145",
+            "on-surface": "#0b1c30",
+            "on-primary-fixed": "#001551",
+            "tertiary-container": "#006948",
+            "on-error-container": "#93000a",
+            "on-secondary-fixed-variant": "#004b73",
+            "surface-variant": "#d3e4fe",
+            "secondary": "#006398",
+            "tertiary-fixed": "#85f8c4",
+            "surface-container-low": "#eff4ff",
+            "inverse-primary": "#b7c4ff",
+            "on-surface-variant": "#434655",
+            "on-secondary-container": "#00476e",
+            "primary-fixed": "#dce1ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "margin-tablet": "1.5rem",
+            "margin": "1rem",
+            "space-lg": "1.25rem",
+            "space-xl": "2rem",
+            "gutter-desktop": "1.5rem",
+            "margin-desktop": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem",
+            "space-md": "0.75rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Hanken Grotesk"],
+            "headline-xl-mobile": ["Hanken Grotesk"],
+            "label-md": ["JetBrains Mono"],
+            "body-lg": ["Hanken Grotesk"],
+            "body-sm": ["Hanken Grotesk"],
+            "headline-sm": ["Hanken Grotesk"],
+            "body-md": ["Hanken Grotesk"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-xl": ["Hanken Grotesk"]
+          },
+          "fontSize": {
+            "headline-lg": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-md": ["0.8125rem", { "lineHeight": "1.125rem", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "body-lg": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "body-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "headline-xl": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.025em", "fontWeight": "700" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    /* Sophisticated Clinical Neumorphic Depth Models */
+    .neu-raised-card {
+      box-shadow: 6px 6px 14px #d3dde8, -6px -6px 14px #ffffff;
+    }
+    .neu-raised-sm {
+      box-shadow: 4px 4px 10px #d3dde8, -4px -4px 10px #ffffff;
+    }
+    .neu-raised-btn {
+      box-shadow: 5px 5px 12px #c9d5e3, -5px -5px 12px #ffffff;
+      transition: all 0.15s ease;
+    }
+    .neu-raised-btn:hover {
+      box-shadow: 7px 7px 16px #c4d1df, -7px -7px 16px #ffffff;
+    }
+    .neu-raised-btn:active {
+      box-shadow: inset 3px 3px 6px #c4d1df, inset -3px -3px 6px #ffffff;
+      transform: translateY(1px);
+    }
+    .neu-recessed-well {
+      box-shadow: inset 2px 2px 5px #cbd5e1, inset -2px -2px 5px #ffffff;
+    }
+    .neu-recessed-deep {
+      box-shadow: inset 3px 3px 8px #c1ccd9, inset -3px -3px 8px #ffffff;
+    }
+    .neu-primary-extruded {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      box-shadow: 4px 4px 12px rgba(29, 78, 216, 0.35), -2px -2px 8px rgba(96, 165, 250, 0.4);
+    }
+    .neu-primary-extruded:active {
+      box-shadow: inset 2px 2px 6px rgba(15, 23, 42, 0.4), inset -2px -2px 6px rgba(96, 165, 250, 0.2);
+      transform: translateY(1px);
+    }
+    
+    /* Progress track fill */
+    .progress-track {
+      box-shadow: inset 2px 2px 4px #cdd7e3, inset -2px -2px 4px #ffffff;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col antialiased selection:bg-surface-container-high selection:text-primary">
+<!-- ================= TOP NAV BAR (Shared Component) ================= -->
+<header class="bg-surface shadow-sm docked full-width top-0 flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-40">
+<div class="flex items-center gap-space-lg">
+<!-- Brand Logo Container -->
+<a class="flex items-center gap-space-sm focus:outline-none" href="#">
+<img alt="DrugSafe AI Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XHWv-usq-t2hD5fUmorfuJNcvUkfXjiXKaHwvB62R8A_tz11QS6EVmsaN8UbMpdWBB_R3Tg7MuO0pqY3q_q6GP6_hkVEcLOH8sJ7Cwou_ohIXjjNmuyTNYsP3-S7pcMPZZGrq-CjnkrS649OMn2UELWcrUCyDmu9m8bFEDh-G3Rr_zLSvGvLGIHNDIdiPGtbT0ciLi3O9fVa5al3TntYfbBOTksUBfxSQ-HlnrDI6TvVxzrNilIa5PGkw"/>
+</a>
+<!-- Inset Recessed Search Bar -->
+<div class="hidden lg:flex items-center w-80 h-10 px-space-md rounded-lg neu-recessed-well bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-outline text-lg mr-space-sm">search</span>
+<input class="bg-transparent border-0 text-on-surface font-body-sm focus:ring-0 focus:outline-none w-full p-0 placeholder:text-outline" placeholder="Search ICH eCTD sections, NDC, or study IDs..." type="text"/>
+<span class="text-label-sm font-label-sm text-outline px-1.5 py-0.5 rounded bg-surface shadow-sm border border-outline-variant/30">⌘K</span>
+</div>
+</div>
+<!-- Right Controls Cluster -->
+<div class="flex items-center gap-space-md">
+<!-- AI Copilot Trigger -->
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-full neu-raised-sm bg-surface-container hover:bg-surface-container-high text-primary font-headline-sm text-xs transition-all active:scale-[0.98]">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="material-symbols-outlined text-sm font-semibold">smart_toy</span>
+<span class="font-headline-sm font-semibold text-xs tracking-tight">IBM Bob (watsonx.ai)</span>
+<span class="text-label-sm font-label-sm bg-surface text-primary px-1.5 py-0.2 rounded-full text-[10px] ml-1">v4.2</span>
+</button>
+<!-- Action Icons -->
+<div class="flex items-center gap-space-xs">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg neu-raised-sm bg-surface hover:bg-surface-container text-on-surface-variant transition-colors duration-150 active:scale-[0.98]" title="Regulatory Alerts">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg neu-raised-sm bg-surface hover:bg-surface-container text-on-surface-variant transition-colors duration-150 active:scale-[0.98]" title="Validation Settings">
+<span class="material-symbols-outlined text-xl">tune</span>
+</button>
+</div>
+<!-- User Profile Node -->
+<div class="flex items-center gap-space-sm pl-space-sm border-l border-outline-variant/40">
+<div class="w-9 h-9 rounded-full neu-raised-sm bg-surface-container-high flex items-center justify-center border border-white text-primary font-bold text-xs" title="Chief Safety Officer and Qualified Person for Pharmacovigilance Avatar">
+          CSO
+        </div>
+<div class="hidden xl:flex flex-col text-left">
+<span class="text-headline-sm font-headline-sm text-xs font-semibold leading-tight text-on-surface">Dr. Aris Thorne</span>
+<span class="text-label-sm font-label-sm text-[10px] text-outline leading-none">QPPV / FDA Liaison</span>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= MAIN LAYOUT FRAMEWORK ================= -->
+<div class="flex flex-1 w-full overflow-hidden">
+<!-- SIDE NAVIGATION RAIL (Shared Component) -->
+<aside class="hidden md:flex fixed top-16 left-0 h-[calc(100vh-4rem)] w-64 z-30 flex-col justify-between p-space-md bg-surface-container-low shadow-md overflow-y-auto">
+<div class="flex flex-col gap-space-md">
+<!-- Node Context Header -->
+<div class="p-space-sm rounded-lg neu-recessed-well bg-surface-container/60 flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-md neu-raised-sm bg-surface flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">medical_services</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-bold text-primary text-xs leading-none">DrugSafe AI</span>
+<span class="text-label-sm font-label-sm text-[10px] text-outline mt-0.5">GxP Pharmacovigilance</span>
+</div>
+</div>
+<!-- Primary CTA Trigger -->
+<button class="w-full flex items-center justify-center gap-space-xs py-2 rounded-lg neu-primary-extruded text-on-primary font-headline-sm text-xs font-semibold active:scale-[0.98] transition-transform duration-100 ease-out">
+<span class="material-symbols-outlined text-base">add_circle</span>
+<span>New Safety Case</span>
+</button>
+<!-- Navigation Tab Links -->
+<nav class="flex flex-col gap-1.5 pt-2">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface font-normal hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<!-- 2. Signal Detection -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface font-normal hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-lg">query_stats</span>
+<span class="text-label-md font-label-md">Signal Detection</span>
+</a>
+<!-- 3. Submission Readiness (ACTIVE MATCH) -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg bg-surface-container text-primary font-semibold shadow-inner transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-label-md font-label-md">Submission Readiness</span>
+<span class="ml-auto w-2 h-2 rounded-full bg-primary"></span>
+</a>
+<!-- 4. Reports -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface font-normal hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-lg">assessment</span>
+<span class="text-label-md font-label-md">Reports</span>
+</a>
+<!-- 5. Data Sources -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface font-normal hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-lg">database</span>
+<span class="text-label-md font-label-md">Data Sources</span>
+</a>
+<!-- 6. Settings -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface font-normal hover:bg-surface-container transition-colors duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span class="text-label-md font-label-md">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Docked Footer Links -->
+<div class="pt-space-md border-t border-outline-variant/30 flex flex-col gap-1">
+<a class="flex items-center gap-space-sm px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-normal hover:bg-surface-container text-xs transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-base">history_edu</span>
+<span class="text-label-sm font-label-sm">Audit Trail</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-normal hover:bg-surface-container text-xs transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-base">policy</span>
+<span class="text-label-sm font-label-sm">Compliance Docs</span>
+</a>
+<div class="mt-2 px-space-sm py-1.5 rounded neu-recessed-well bg-surface-container-low text-[10px] text-outline font-label-sm flex items-center justify-between">
+<span>ICH eCTD v4.0.3</span>
+<span class="text-tertiary font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> GxP Lock
+          </span>
+</div>
+</div>
+</aside>
+<!-- ================= MAIN WORKBENCH CANVAS ================= -->
+<main class="flex-1 md:ml-64 p-space-md lg:p-margin-desktop bg-background overflow-y-auto space-y-space-lg pb-24">
+<!-- 1. PAGE HEADER -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div>
+<div class="flex items-center gap-space-xs text-label-sm font-label-sm text-outline mb-1">
+<span>REGULATORY DOSSIER VERIFICATION</span>
+<span>•</span>
+<span class="text-primary font-semibold">ICH M4 SPECIFICATION ENGINE</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface font-bold tracking-tight">
+            Submission Readiness &amp; ICH CTD Dossier Verification
+          </h1>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-3xl mt-1">
+            Verify your Common Technical Document (CTD) structure against ICH M4 specifications and identify regulatory gaps prior to FDA/EMA submission.
+          </p>
+</div>
+<!-- Header Action Triggers -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="px-space-md py-2.5 rounded-lg neu-raised-btn bg-surface hover:bg-surface-container-low text-on-surface font-headline-sm text-xs font-semibold flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-base text-secondary">compare_arrows</span>
+<span>Compare to FDA eCTD v4.0 Validation Criteria</span>
+</button>
+<button class="px-space-md py-2.5 rounded-lg neu-raised-btn bg-surface-container-high hover:bg-surface-container text-primary font-headline-sm text-xs font-semibold flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-base">file_download</span>
+<span>Export Full Readiness Dossier</span>
+</button>
+</div>
+</div>
+<!-- 2. INGESTION CONSOLE & HERO OVERALL READINESS SCORE (BENTO ROW) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Dossier Ingestion Console (Neumorphic Inset Card - 7 Columns) -->
+<div class="xl:col-span-7 rounded-xl neu-raised-card bg-surface p-space-lg flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-sm border-b border-outline-variant/30">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-xl">upload_file</span>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface text-sm">
+                Dossier Ingestion Console
+              </h2>
+</div>
+<!-- Segmented Control Mode Tabs -->
+<div class="flex p-1 rounded-lg neu-recessed-well bg-surface-container-low text-label-sm font-label-sm">
+<button class="px-space-sm py-1 rounded neu-raised-sm bg-surface text-primary font-semibold transition-all">
+                Upload Files
+              </button>
+<button class="px-space-sm py-1 rounded text-on-surface-variant hover:text-on-surface transition-all">
+                Paste Dossier Outline / JSON Structure
+              </button>
+</div>
+</div>
+<!-- Drag & Drop Recessed Dropzone -->
+<div class="my-space-md rounded-xl neu-recessed-deep bg-surface-container-low/80 p-space-lg border-2 border-dashed border-outline-variant/60 flex flex-col items-center justify-center text-center cursor-pointer group hover:border-primary transition-all">
+<div class="w-14 h-14 rounded-full neu-raised-sm bg-surface flex items-center justify-center text-primary mb-3 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-2xl">cloud_upload</span>
+</div>
+<p class="text-headline-sm font-headline-sm text-sm font-semibold text-on-surface">
+              Upload Dossier Outline &amp; Module Indexes
+            </p>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 max-w-md">
+              Or drag and drop your eCTD Table of Contents (TOC) XML or study index
+            </p>
+<!-- Supported Format Badges -->
+<div class="flex flex-wrap items-center justify-center gap-1.5 mt-4">
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded neu-raised-sm bg-surface text-on-surface-variant text-[10px]">PDF</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded neu-raised-sm bg-surface text-on-surface-variant text-[10px]">DOCX</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded neu-raised-sm bg-surface text-on-surface-variant text-[10px]">JSON</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded neu-raised-sm bg-surface-container-high text-primary font-semibold text-[10px]">XML / eCTD</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded neu-raised-sm bg-surface text-on-surface-variant text-[10px]">TXT</span>
+</div>
+</div>
+<!-- Bottom Ingestion Controls -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-xs text-body-sm font-body-sm text-outline text-xs">
+<span class="material-symbols-outlined text-base text-tertiary">check_circle</span>
+<span>Loaded: <strong class="text-on-surface font-label-sm font-normal">NDA_219084_eCTD_Rev2.xml</strong> (4.8 MB)</span>
+</div>
+<button class="w-full sm:w-auto px-space-lg py-2.5 rounded-lg neu-primary-extruded text-on-primary font-headline-sm text-xs font-semibold flex items-center justify-center gap-space-sm">
+<span class="material-symbols-outlined text-base">auto_awesome</span>
+<span>Check Submission Readiness</span>
+<span class="text-label-sm font-label-sm bg-white/20 px-1.5 py-0.5 rounded text-[10px] tracking-wider uppercase">AI Validated</span>
+</button>
+</div>
+</div>
+<!-- Overall Readiness Score Hero Widget (Tactile Neumorphic Raised Card - 5 Columns) -->
+<div class="xl:col-span-5 rounded-xl neu-raised-card bg-surface p-space-lg flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-xl">speed</span>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface text-sm">
+                Overall Dossier Readiness
+              </h2>
+</div>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 flex items-center gap-1 font-semibold text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Ready with Minor Warnings
+            </span>
+</div>
+<!-- Circular Metric Centerpiece -->
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-space-md items-center my-space-sm py-2">
+<!-- Circular Gauge -->
+<div class="sm:col-span-5 flex flex-col items-center justify-center">
+<div class="relative w-32 h-32 rounded-full neu-raised-card bg-surface flex items-center justify-center p-2.5">
+<!-- SVG Dual Ring Gauge -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="neu-recessed-well" cx="50" cy="50" fill="transparent" r="42" stroke="#e2e8f0" stroke-width="8"></circle>
+<circle cx="50" cy="50" fill="transparent" r="42" stroke="#1d4ed8" stroke-dasharray="263.89" stroke-dashoffset="47.5" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="text-headline-xl font-headline-xl font-extrabold text-on-surface leading-none tracking-tight">82%</span>
+<span class="text-label-sm font-label-sm text-[10px] text-outline uppercase font-medium mt-0.5">Completeness</span>
+</div>
+</div>
+</div>
+<!-- Telemetry Breakdown Ledger -->
+<div class="sm:col-span-7 flex flex-col gap-2">
+<div class="p-2 rounded-lg neu-recessed-well bg-surface-container-low flex items-center justify-between">
+<span class="text-body-sm font-body-sm text-on-surface-variant text-xs">Total ICH Sections:</span>
+<span class="text-label-md font-label-md font-semibold text-on-surface">142 Checked</span>
+</div>
+<div class="p-2 rounded-lg neu-recessed-well bg-surface-container-low flex items-center justify-between">
+<span class="text-body-sm font-body-sm text-emerald-800 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">check_circle</span> Completed Sections:
+                </span>
+<span class="text-label-md font-label-md font-semibold text-emerald-700">116</span>
+</div>
+<div class="p-2 rounded-lg neu-recessed-well bg-surface-container-low flex items-center justify-between">
+<span class="text-body-sm font-body-sm text-amber-800 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">warning</span> Gaps Identified:
+                </span>
+<span class="text-label-md font-label-md font-semibold text-amber-700">18</span>
+</div>
+<div class="p-2 rounded-lg neu-recessed-well bg-surface-container-low flex items-center justify-between border-l-2 border-red-500">
+<span class="text-body-sm font-body-sm text-red-800 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">block</span> Critical Blockers:
+                </span>
+<span class="text-label-md font-label-md font-bold text-red-600">8</span>
+</div>
+</div>
+</div>
+<!-- Regulatory Agency Compliance Footprint -->
+<div class="pt-2 border-t border-outline-variant/30 flex items-center justify-between text-label-sm font-label-sm text-[11px] text-outline">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-primary">verified_user</span>
+<span>Regulatory Baseline:</span>
+</span>
+<span class="font-medium text-on-surface">FDA 21 CFR 314 &amp; EMA CHMP ICH M4</span>
+</div>
+</div>
+</div>
+<!-- 3. THE 5 ICH CTD MODULE BREAKDOWN CARDS (NEUMORPHIC GRID) -->
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface text-base">
+              ICH CTD 5-Module Structural Audit
+            </h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+              Multi-tiered granular validation of regulatory documentation across all Common Technical Document branches.
+            </p>
+</div>
+<div class="text-label-sm font-label-sm text-outline hidden sm:block">
+            Standard: ICH M4 v4.0.3 (Granular Specs)
+          </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-space-md">
+<!-- MODULE 1: Administrative Information -->
+<div class="rounded-xl neu-raised-card bg-surface p-space-md flex flex-col justify-between border-t-4 border-emerald-500">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="text-label-sm font-label-sm px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold text-[10px]">
+                  Approved
+                </span>
+<span class="text-label-md font-label-md font-bold text-emerald-700">95%</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface text-sm mt-1">
+                Module 1: Administrative
+              </h3>
+<p class="text-label-sm font-label-sm text-outline text-[11px]">
+                Regional Administrative Information
+              </p>
+<!-- Tactile Inset Progress Channel -->
+<div class="w-full h-2 rounded-full progress-track bg-surface-container-low my-space-sm overflow-hidden p-0.5">
+<div class="h-full rounded-full bg-emerald-600" style="width: 95%;"></div>
+</div>
+<!-- Module Metadata -->
+<div class="space-y-1.5 text-body-sm font-body-sm text-xs mt-2">
+<div class="flex justify-between text-on-surface-variant">
+<span>Sections Complete:</span>
+<span class="font-label-sm font-semibold text-on-surface">19 / 20</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low neu-recessed-well text-on-surface-variant text-[11px] leading-snug">
+<span class="font-medium text-emerald-800">Minor Flag:</span> 1 non-blocking item (US FDA Form 356h electronic signature pending confirmation).
+                </div>
+</div>
+</div>
+<button class="mt-space-md w-full py-2 px-space-sm rounded-lg neu-raised-btn bg-surface hover:bg-surface-container-low text-primary font-headline-sm text-xs font-semibold flex items-center justify-center gap-1 transition-all">
+<span>View Detailed Gap Report</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- MODULE 2: CTD Summaries -->
+<div class="rounded-xl neu-raised-card bg-surface p-space-md flex flex-col justify-between border-t-4 border-amber-500">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="text-label-sm font-label-sm px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-semibold text-[10px]">
+                  Minor Gaps
+                </span>
+<span class="text-label-md font-label-md font-bold text-amber-700">88%</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface text-sm mt-1">
+                Module 2: CTD Summaries
+              </h3>
+<p class="text-label-sm font-label-sm text-outline text-[11px]">
+                Overview &amp; Executive Clinical Synopses
+              </p>
+<!-- Tactile Inset Progress Channel -->
+<div class="w-full h-2 rounded-full progress-track bg-surface-container-low my-space-sm overflow-hidden p-0.5">
+<div class="h-full rounded-full bg-amber-500" style="width: 88%;"></div>
+</div>
+<!-- Module Metadata -->
+<div class="space-y-1.5 text-body-sm font-body-sm text-xs mt-2">
+<div class="flex justify-between text-on-surface-variant">
+<span>Sections Complete:</span>
+<span class="font-label-sm font-semibold text-on-surface">14 / 16</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low neu-recessed-well text-on-surface-variant text-[11px] leading-snug">
+<span class="font-medium text-amber-800">Gap:</span> Missing 2.7.4 Summary of Clinical Safety updates for latest cohort.
+                </div>
+</div>
+</div>
+<button class="mt-space-md w-full py-2 px-space-sm rounded-lg neu-raised-btn bg-surface hover:bg-surface-container-low text-primary font-headline-sm text-xs font-semibold flex items-center justify-center gap-1 transition-all">
+<span>View Detailed Gap Report</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- MODULE 3: Quality / CMC -->
+<div class="rounded-xl neu-raised-card bg-surface p-space-md flex flex-col justify-between border-t-4 border-amber-600">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="text-label-sm font-label-sm px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300 font-semibold text-[10px]">
+                  Action Required
+                </span>
+<span class="text-label-md font-label-md font-bold text-amber-800">74%</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface text-sm mt-1">
+                Module 3: Quality / CMC
+              </h3>
+<p class="text-label-sm font-label-sm text-outline text-[11px]">
+                Chemistry, Manufacturing &amp; Controls
+              </p>
+<!-- Tactile Inset Progress Channel -->
+<div class="w-full h-2 rounded-full progress-track bg-surface-container-low my-space-sm overflow-hidden p-0.5">
+<div class="h-full rounded-full bg-amber-600" style="width: 74%;"></div>
+</div>
+<!-- Module Metadata -->
+<div class="space-y-1.5 text-body-sm font-body-sm text-xs mt-2">
+<div class="flex justify-between text-on-surface-variant">
+<span>Sections Complete:</span>
+<span class="font-label-sm font-semibold text-on-surface">31 / 42</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low neu-recessed-well text-on-surface-variant text-[11px] leading-snug">
+<span class="font-medium text-amber-900">Critical:</span> 4 critical stability reports missing (3.2.P.8.3 accelerated shelf-life).
+                </div>
+</div>
+</div>
+<button class="mt-space-md w-full py-2 px-space-sm rounded-lg neu-raised-btn bg-surface hover:bg-surface-container-low text-primary font-headline-sm text-xs font-semibold flex items-center justify-center gap-1 transition-all">
+<span>View Detailed Gap Report</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- MODULE 4: Nonclinical Study Reports -->
+<div class="rounded-xl neu-raised-card bg-surface p-space-md flex flex-col justify-between border-t-4 border-emerald-500">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="text-label-sm font-label-sm px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold text-[10px]">
+                  Ready
+                </span>
+<span class="text-label-md font-label-md font-bold text-emerald-700">90%</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface text-sm mt-1">
+                Module 4: Nonclinical
+              </h3>
+<p class="text-label-sm font-label-sm text-outline text-[11px]">
+                Toxicology &amp; Pharmacology Data
+              </p>
+<!-- Tactile Inset Progress Channel -->
+<div class="w-full h-2 rounded-full progress-track bg-surface-container-low my-space-sm overflow-hidden p-0.5">
+<div class="h-full rounded-full bg-emerald-600" style="width: 90%;"></div>
+</div>
+<!-- Module Metadata -->
+<div class="space-y-1.5 text-body-sm font-body-sm text-xs mt-2">
+<div class="flex justify-between text-on-surface-variant">
+<span>Sections Complete:</span>
+<span class="font-label-sm font-semibold text-on-surface">27 / 30</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low neu-recessed-well text-on-surface-variant text-[11px] leading-snug">
+<span class="font-medium text-emerald-800">Status:</span> 3 non-clinical summaries pending sign-off from Principal Investigator.
+                </div>
+</div>
+</div>
+<button class="mt-space-md w-full py-2 px-space-sm rounded-lg neu-raised-btn bg-surface hover:bg-surface-container-low text-primary font-headline-sm text-xs font-semibold flex items-center justify-center gap-1 transition-all">
+<span>View Detailed Gap Report</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- MODULE 5: Clinical Study Reports -->
+<div class="rounded-xl neu-raised-card bg-surface p-space-md flex flex-col justify-between border-t-4 border-red-500">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="text-label-sm font-label-sm px-1.5 py-0.5 rounded bg-red-50 text-red-800 border border-red-200 font-semibold text-[10px]">
+                  Critical Gap
+                </span>
+<span class="text-label-md font-label-md font-bold text-red-700">63%</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface text-sm mt-1">
+                Module 5: Clinical Reports
+              </h3>
+<p class="text-label-sm font-label-sm text-outline text-[11px]">
+                Efficacy, Safety &amp; Human Trial CSRs
+              </p>
+<!-- Tactile Inset Progress Channel -->
+<div class="w-full h-2 rounded-full progress-track bg-surface-container-low my-space-sm overflow-hidden p-0.5">
+<div class="h-full rounded-full bg-red-600" style="width: 63%;"></div>
+</div>
+<!-- Module Metadata -->
+<div class="space-y-1.5 text-body-sm font-body-sm text-xs mt-2">
+<div class="flex justify-between text-on-surface-variant">
+<span>Sections Complete:</span>
+<span class="font-label-sm font-semibold text-on-surface">25 / 40</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low neu-recessed-well text-on-surface-variant text-[11px] leading-snug">
+<span class="font-medium text-red-700">Blocker:</span> Section 5.3.5.3 Integrated Summary of Safety (ISS) missing dataset linkages.
+                </div>
+</div>
+</div>
+<button class="mt-space-md w-full py-2 px-space-sm rounded-lg neu-raised-btn bg-surface hover:bg-surface-container-low text-primary font-headline-sm text-xs font-semibold flex items-center justify-center gap-1 transition-all">
+<span>View Detailed Gap Report</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 4. BOTTOM "ASK IBM BOB REGULATORY SPECIALIST" PROMPT STRIP -->
+<div class="rounded-xl neu-raised-card bg-surface p-space-md flex flex-col md:flex-row items-center justify-between gap-space-md border border-primary/20 bg-gradient-to-r from-surface via-surface-container-low to-surface">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl neu-raised-sm bg-surface-container-high flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm text-primary font-bold tracking-wide uppercase">AI Regulatory Intelligence</span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span class="text-label-sm font-label-sm text-outline text-[11px]">watsonx.ai active agent</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface font-medium mt-0.5">
+              Ask IBM Bob: <span class="text-primary italic">"What are the top 3 regulatory blockers in Module 5 before submission?"</span>
+</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm w-full md:w-auto">
+<button class="w-full md:w-auto px-space-lg py-2.5 rounded-lg neu-primary-extruded text-on-primary font-headline-sm text-xs font-semibold flex items-center justify-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-base">bolt</span>
+<span>Launch Specialist Query</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<!-- Micro-Interactions Script for Neumorphic Tactile Effects -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add subtle ripple / tactile press feedback
+      const buttons = document.querySelectorAll('.neu-raised-btn, .neu-primary-extruded');
+      buttons.forEach(btn => {
+        btn.addEventListener('mousedown', () => {
+          btn.style.transform = 'translateY(1px)';
+        });
+        btn.addEventListener('mouseup', () => {
+          btn.style.transform = 'none';
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'none';
+        });
+      });
+    });
+  </script>
+</body></html>

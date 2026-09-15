@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-background" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DrugSafe AI — Enterprise Pharmacovigilance &amp; Safety Intelligence</title>
+<!-- Google Fonts: Hanken Grotesk & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed": "#001551",
+            "tertiary-fixed-dim": "#68dba9",
+            "on-background": "#0b1c30",
+            "secondary": "#006398",
+            "background": "#f8f9ff",
+            "inverse-primary": "#b7c4ff",
+            "primary": "#0037b0",
+            "tertiary-fixed": "#85f8c4",
+            "primary-container": "#1d4ed8",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary-container": "#00476e",
+            "on-secondary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-tint": "#2151da",
+            "on-primary": "#ffffff",
+            "inverse-on-surface": "#eaf1ff",
+            "error": "#ba1a1a",
+            "surface-variant": "#d3e4fe",
+            "on-tertiary-fixed": "#002114",
+            "on-primary-container": "#cad3ff",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed-dim": "#93ccff",
+            "error-container": "#ffdad6",
+            "surface-bright": "#f8f9ff",
+            "outline": "#747686",
+            "on-surface-variant": "#434655",
+            "surface-container-low": "#eff4ff",
+            "on-tertiary-fixed-variant": "#005137",
+            "surface": "#f8f9ff",
+            "surface-container": "#e5eeff",
+            "tertiary-container": "#006948",
+            "surface-container-high": "#dce9ff",
+            "surface-dim": "#cbdbf5",
+            "secondary-container": "#5bb8fe",
+            "inverse-surface": "#213145",
+            "surface-container-highest": "#d3e4fe",
+            "on-primary-fixed-variant": "#0039b5",
+            "outline-variant": "#c4c5d7",
+            "tertiary": "#004f35",
+            "primary-fixed-dim": "#b7c4ff",
+            "on-surface": "#0b1c30",
+            "secondary-fixed": "#cce5ff",
+            "primary-fixed": "#dce1ff",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#004b73",
+            "on-tertiary-container": "#76eab6"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "gutter-desktop": "1.5rem",
+            "margin-desktop": "2rem",
+            "space-md": "0.75rem",
+            "space-xl": "2rem",
+            "margin-tablet": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.25rem",
+            "space-xs": "0.25rem",
+            gutter: "1rem",
+            margin: "1rem"
+          },
+          fontFamily: {
+            "body-md": ["Hanken Grotesk", "sans-serif"],
+            "label-md": ["JetBrains Mono", "monospace"],
+            "headline-xl": ["Hanken Grotesk", "sans-serif"],
+            "body-lg": ["Hanken Grotesk", "sans-serif"],
+            "headline-lg": ["Hanken Grotesk", "sans-serif"],
+            "headline-xl-mobile": ["Hanken Grotesk", "sans-serif"],
+            "body-sm": ["Hanken Grotesk", "sans-serif"],
+            "label-sm": ["JetBrains Mono", "monospace"],
+            "headline-sm": ["Hanken Grotesk", "sans-serif"]
+          },
+          fontSize: {
+            "body-md": ["0.875rem", { lineHeight: "1.25rem", letterSpacing: "0em", fontWeight: "400" }],
+            "label-md": ["0.8125rem", { lineHeight: "1.125rem", letterSpacing: "0.02em", fontWeight: "500" }],
+            "headline-xl": ["2.25rem", { lineHeight: "2.75rem", letterSpacing: "-0.025em", fontWeight: "700" }],
+            "body-lg": ["1rem", { lineHeight: "1.5rem", letterSpacing: "-0.005em", fontWeight: "400" }],
+            "headline-lg": ["1.5rem", { lineHeight: "2rem", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "headline-xl-mobile": ["1.75rem", { lineHeight: "2.25rem", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-sm": ["0.75rem", { lineHeight: "1rem", letterSpacing: "0.01em", fontWeight: "400" }],
+            "label-sm": ["0.6875rem", { lineHeight: "0.875rem", letterSpacing: "0.04em", fontWeight: "500" }],
+            "headline-sm": ["1.125rem", { lineHeight: "1.5rem", letterSpacing: "-0.01em", fontWeight: "600" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    /* Clinical Neumorphic Surfaces */
+    .neu-surface-level-2 {
+      box-shadow: 6px 6px 18px #d1dced, -6px -6px 18px #ffffff;
+    }
+    .neu-surface-level-1 {
+      box-shadow: 4px 4px 10px #d8e3f0, -4px -4px 10px #ffffff;
+    }
+    .neu-well-inset {
+      box-shadow: inset 2px 2px 5px #ccd7e6, inset -2px -2px 5px #ffffff;
+    }
+    .neu-well-inset-deep {
+      box-shadow: inset 3px 3px 6px #c4d1e2, inset -3px -3px 6px #ffffff;
+    }
+    .neu-btn-raised {
+      box-shadow: 4px 4px 10px #cad6e6, -4px -4px 10px #ffffff;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .neu-btn-raised:hover {
+      box-shadow: 6px 6px 14px #c2cfdf, -6px -6px 14px #ffffff;
+      transform: translateY(-1px);
+    }
+    .neu-btn-raised:active {
+      box-shadow: inset 2px 2px 5px #bac7d8, inset -2px -2px 5px #ffffff;
+      transform: translateY(1px);
+    }
+    .neu-btn-primary {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      box-shadow: 4px 4px 12px rgba(29, 78, 216, 0.35), -2px -2px 8px rgba(96, 165, 250, 0.2);
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .neu-btn-primary:hover {
+      box-shadow: 6px 6px 16px rgba(29, 78, 216, 0.45), -3px -3px 10px rgba(96, 165, 250, 0.3);
+      transform: translateY(-1px);
+    }
+    .neu-btn-primary:active {
+      box-shadow: inset 3px 3px 6px rgba(15, 23, 42, 0.4), inset -1px -1px 3px rgba(255, 255, 255, 0.2);
+      transform: translateY(1px);
+    }
+  </style>
+</head>
+<body class="h-full bg-background text-on-surface antialiased overflow-x-hidden select-none font-body-md text-body-md">
+<!-- Application Shell Root: Split Screen Architecture -->
+<div class="min-h-screen w-full flex flex-col lg:flex-row bg-background">
+<!-- ========================================================================= -->
+<!-- LEFT HALF: Pharmaceutical Intelligence Arena & 3D Molecular Showcase    -->
+<!-- ========================================================================= -->
+<section class="lg:w-7/12 w-full p-space-lg lg:p-margin-desktop flex flex-col justify-between relative overflow-hidden bg-surface-container-low border-r border-outline-variant/30">
+<!-- Top Bar: Logo and High-Trust GxP Metadata -->
+<div class="z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<img alt="DrugSafe AI brand logo featuring an elegant pharmaceutical molecular shield with an analytical crosshair in clinical blue" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XHWv-usq-t2hD5fUmorfuJNcvUkfXjiXKaHwvB62R8A_tz11QS6EVmsaN8UbMpdWBB_R3Tg7MuO0pqY3q_q6GP6_hkVEcLOH8sJ7Cwou_ohIXjjNmuyTNYsP3-S7pcMPZZGrq-CjnkrS649OMn2UELWcrUCyDmu9m8bFEDh-G3Rr_zLSvGvLGIHNDIdiPGtbT0ciLi3O9fVa5al3TntYfbBOTksUBfxSQ-HlnrDI6TvVxzrNilIa5PGkw"/>
+<div class="h-7 w-[1px] bg-outline-variant hidden sm:block"></div>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium tracking-tight">GxP Pharmacovigilance Suite v4.2</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full neu-surface-level-1 bg-surface">
+<span class="inline-block w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-tertiary font-semibold tracking-wide">FAERS &amp; EudraVigilance Sync: ACTIVE</span>
+</div>
+</div>
+<!-- Center Hero Area: Tagline, 3D Molecular Shield Visualizer -->
+<div class="my-auto py-space-md z-10 flex flex-col items-center text-center max-w-2xl mx-auto w-full">
+<div class="space-y-space-xs mb-space-sm">
+<div class="inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container neu-well-inset text-primary font-label-sm text-label-sm uppercase tracking-wider font-semibold">
+<span class="material-symbols-outlined text-[14px]">query_stats</span>
+            Signal Detection &amp; Regulatory Submission
+          </div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight leading-tight">
+            Drug Safety Signal Detection &amp; Regulatory Submission Readiness
+          </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-lg mx-auto">
+            Autonomous post-marketing pharmacovigilance, PRR/ROR statistical surveillance, and watsonx.ai-driven eCTD regulatory compilation.
+          </p>
+</div>
+<!-- Interactive 3D Molecular Scene Container -->
+<div class="w-full relative rounded-xl neu-well-inset bg-surface-container/40 p-space-xs my-space-sm overflow-hidden">
+<div class="absolute top-space-sm left-space-sm z-20 flex items-center gap-space-xs px-space-sm py-0.5 rounded neu-surface-level-1 bg-surface/90 text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-primary">view_in_ar</span>
+            Lattice Ref: <span class="font-mono text-primary font-semibold">MOL-OXA-982</span>
+</div>
+<div class="absolute top-space-sm right-space-sm z-20 flex items-center gap-space-xs px-space-sm py-0.5 rounded neu-surface-level-1 bg-surface/90 text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+            Stability: 99.98%
+          </div>
+<!-- 3D Component -->
+<!-- STITCH_THREEJS_START:ANIMATION_7 class="w-full h-[480px] bg-transparent block" -->
+<div class="w-full h-[480px] bg-transparent block" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_7" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_7');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // DrugSafe AI Interactive 3D Pharmaceutical Molecular & Security Lattice
+const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+camera.position.set(0, 0, 18);
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+container.appendChild(renderer.domElement);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+scene.add(ambientLight);
+
+const dirLight1 = new THREE.DirectionalLight(0x2563eb, 1.4);
+dirLight1.position.set(10, 15, 10);
+scene.add(dirLight1);
+
+const dirLight2 = new THREE.DirectionalLight(0x60a5fa, 0.9);
+dirLight2.position.set(-10, -10, 10);
+scene.add(dirLight2);
+
+// Main Master Group
+const group = new THREE.Group();
+scene.add(group);
+
+// 1. Central Biopharmaceutical Molecular Cluster
+const coreGroup = new THREE.Group();
+group.add(coreGroup);
+
+const sphereMatPrimary = new THREE.MeshPhongMaterial({
+  color: 0x1d4ed8,
+  shininess: 90,
+  specular: 0x93c5fd
+});
+
+const sphereMatCyan = new THREE.MeshPhongMaterial({
+  color: 0x0284c7,
+  shininess: 80,
+  specular: 0xbae6fd
+});
+
+const sphereMatLight = new THREE.MeshPhongMaterial({
+  color: 0x3b82f6,
+  shininess: 70,
+  specular: 0xffffff
+});
+
+const bondMat = new THREE.MeshLambertMaterial({
+  color: 0x93c5fd,
+  transparent: true,
+  opacity: 0.85
+});
+
+// Molecular Nodes (Positions resembling a pharmacological active compound core)
+const atomPositions = [
+  new THREE.Vector3(0, 0, 0),
+  new THREE.Vector3(2.2, 1.2, 0.8),
+  new THREE.Vector3(-2.0, 1.4, -0.6),
+  new THREE.Vector3(1.8, -1.8, 1.2),
+  new THREE.Vector3(-1.9, -1.5, -0.9),
+  new THREE.Vector3(0, 2.5, -1.2),
+  new THREE.Vector3(0, -2.6, 0.6),
+  new THREE.Vector3(3.6, -0.4, -1.1),
+  new THREE.Vector3(-3.5, 0.2, 1.3),
+  new THREE.Vector3(1.5, 3.2, 1.1),
+  new THREE.Vector3(-1.6, -3.1, 1.4)
+];
+
+const atomMeshes = [];
+atomPositions.forEach((pos, idx) => {
+  const radius = idx === 0 ? 1.05 : 0.55 + (idx % 3) * 0.12;
+  const geom = new THREE.SphereGeometry(radius, 28, 28);
+  const mat = idx % 3 === 0 ? sphereMatPrimary : (idx % 3 === 1 ? sphereMatCyan : sphereMatLight);
+  const mesh = new THREE.Mesh(geom, mat);
+  mesh.position.copy(pos);
+  coreGroup.add(mesh);
+  atomMeshes.push({ mesh, basePos: pos.clone(), seed: idx * 1.3 });
+});
+
+// Molecular Bonds (Cylinders connecting nodes)
+const connections = [
+  [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6],
+  [1, 7], [2, 8], [5, 9], [6, 10], [1, 5], [3, 6]
+];
+
+function createBond(p1, p2) {
+  const distance = p1.distanceTo(p2);
+  const geom = new THREE.CylinderGeometry(0.09, 0.09, distance, 12);
+  const bond = new THREE.Mesh(geom, bondMat);
+  
+  const mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
+  bond.position.copy(mid);
+  bond.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), p2.clone().sub(p1).normalize());
+  return bond;
+}
+
+connections.forEach(conn => {
+  const b = createBond(atomPositions[conn[0]], atomPositions[conn[1]]);
+  coreGroup.add(b);
+});
+
+// 2. Orbital Protective Safety Rings (Tactile Clinical Precision)
+const ringGroup = new THREE.Group();
+group.add(ringGroup);
+
+const ringMat1 = new THREE.MeshStandardMaterial({
+  color: 0x2563eb,
+  roughness: 0.3,
+  metalness: 0.1,
+  transparent: true,
+  opacity: 0.6
+});
+
+const ringMat2 = new THREE.MeshStandardMaterial({
+  color: 0x38bdf8,
+  roughness: 0.4,
+  metalness: 0.1,
+  transparent: true,
+  opacity: 0.45
+});
+
+const ringGeom1 = new THREE.TorusGeometry(6.2, 0.05, 16, 100);
+const ring1 = new THREE.Mesh(ringGeom1, ringMat1);
+ring1.rotation.x = Math.PI / 3;
+ring1.rotation.y = Math.PI / 6;
+ringGroup.add(ring1);
+
+const ringGeom2 = new THREE.TorusGeometry(7.0, 0.04, 16, 100);
+const ring2 = new THREE.Mesh(ringGeom2, ringMat2);
+ring2.rotation.x = -Math.PI / 4;
+ring2.rotation.z = Math.PI / 5;
+ringGroup.add(ring2);
+
+// Satellite electron data nodes along rings
+const satelliteGroup = new THREE.Group();
+group.add(satelliteGroup);
+const satMat = new THREE.MeshPhongMaterial({ color: 0x1d4ed8, emissive: 0x1e40af, emissiveIntensity: 0.4 });
+const sat1 = new THREE.Mesh(new THREE.SphereGeometry(0.28, 16, 16), satMat);
+const sat2 = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 16), satMat);
+satelliteGroup.add(sat1);
+satelliteGroup.add(sat2);
+
+// 3. Surrounding Floating Precision Particles (ICH/GxP data points)
+const particleCount = 65;
+const partGeom = new THREE.BufferGeometry();
+const partPositions = new Float32Array(particleCount * 3);
+for(let i = 0; i < particleCount * 3; i += 3) {
+  partPositions[i] = (Math.random() - 0.5) * 22;
+  partPositions[i+1] = (Math.random() - 0.5) * 22;
+  partPositions[i+2] = (Math.random() - 0.5) * 14;
+}
+partGeom.setAttribute('position', new THREE.BufferAttribute(partPositions, 3));
+const partMat = new THREE.PointsMaterial({
+  color: 0x60a5fa,
+  size: 0.18,
+  transparent: true,
+  opacity: 0.65
+});
+const particles = new THREE.Points(partGeom, partMat);
+group.add(particles);
+
+// Interactive mouse reaction
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+
+function onMouseMove(e) {
+  const rect = container.getBoundingClientRect();
+  mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  mouseY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+}
+window.addEventListener('mousemove', onMouseMove);
+
+// Resize handler
+function onResize() {
+  const w = container.clientWidth || window.innerWidth;
+  const h = container.clientHeight || window.innerHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+}
+window.addEventListener('resize', onResize);
+
+// Animation Loop
+let clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+
+  // Smooth mouse damping
+  targetX += (mouseX - targetX) * 0.05;
+  targetY += (mouseY - targetY) * 0.05;
+
+  // Gentle floating rotation
+  group.rotation.y = t * 0.28 + targetX * 0.45;
+  group.rotation.x = Math.sin(t * 0.2) * 0.15 - targetY * 0.35;
+  group.position.y = Math.sin(t * 0.7) * 0.35;
+
+  // Individual atom subtle oscillation (breathing molecule)
+  atomMeshes.forEach(item => {
+    const s = item.seed;
+    item.mesh.position.x = item.basePos.x + Math.sin(t * 1.5 + s) * 0.08;
+    item.mesh.position.y = item.basePos.y + Math.cos(t * 1.4 + s) * 0.08;
+    item.mesh.position.z = item.basePos.z + Math.sin(t * 1.2 + s) * 0.08;
+  });
+
+  // Orbital rings independent counter-rotations
+  ring1.rotation.z = t * 0.35;
+  ring2.rotation.y = -t * 0.42;
+
+  // Satellite positions orbiting
+  sat1.position.x = Math.cos(t * 0.9) * 6.2;
+  sat1.position.y = Math.sin(t * 0.9) * Math.cos(Math.PI / 3) * 6.2;
+  sat1.position.z = Math.sin(t * 0.9) * Math.sin(Math.PI / 3) * 6.2;
+
+  sat2.position.x = Math.cos(-t * 0.7) * 7.0;
+  sat2.position.z = Math.sin(-t * 0.7) * 7.0;
+  sat2.position.y = Math.sin(t * 0.7) * 2.5;
+
+  particles.rotation.y = t * 0.06;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_7 -->
+</div>
+<!-- 3D Scene Interactive Instruction -->
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary">touch_app</span>
+          Interactive 3D Active Compound &amp; Signal Lattice • Drag/Move cursor to inspect molecular stability
+        </p>
+</div>
+<!-- Bottom: Enterprise Trust & Compliance Proof Badges -->
+<div class="z-10 pt-space-md border-t border-outline-variant/30">
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
+<div class="neu-surface-level-1 bg-surface rounded-lg p-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+<div>
+<p class="font-label-sm text-label-sm font-semibold text-on-surface leading-tight">21 CFR Part 11</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">FDA Validated</p>
+</div>
+</div>
+<div class="neu-surface-level-1 bg-surface rounded-lg p-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">health_and_safety</span>
+<div>
+<p class="font-label-sm text-label-sm font-semibold text-on-surface leading-tight">GxP Compliant</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Audit-Ready Cloud</p>
+</div>
+</div>
+<div class="neu-surface-level-1 bg-surface rounded-lg p-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">sync</span>
+<div>
+<p class="font-label-sm text-label-sm font-semibold text-on-surface leading-tight">openFDA FAERS</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Live Synchronized</p>
+</div>
+</div>
+<div class="neu-surface-level-1 bg-surface rounded-lg p-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[20px]">description</span>
+<div>
+<p class="font-label-sm text-label-sm font-semibold text-on-surface leading-tight">ICH M4 eCTD</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Certified Export</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- RIGHT HALF: Subtle Neumorphic Authentication Card                        -->
+<!-- ========================================================================= -->
+<main class="lg:w-5/12 w-full p-space-lg lg:p-space-xl flex flex-col justify-center items-center relative bg-surface">
+<!-- Center Login Card -->
+<div class="w-full max-w-md bg-surface rounded-xl neu-surface-level-2 p-space-lg lg:p-space-xl flex flex-col relative z-10 border border-white/60">
+<!-- Mode Switch: Segmented Tab Radios in Sunken Well -->
+<div class="w-full p-1 bg-surface-container rounded-lg neu-well-inset flex items-center justify-between mb-space-lg">
+<button class="w-1/2 py-space-xs text-center font-headline-sm text-headline-sm font-semibold rounded-md bg-surface text-primary neu-btn-raised transition-all duration-150" id="tab-signin" onclick="switchAuthMode('signin')">
+            Sign In
+          </button>
+<button class="w-1/2 py-space-xs text-center font-headline-sm text-headline-sm font-medium rounded-md text-on-surface-variant hover:text-on-surface transition-all duration-150" id="tab-register" onclick="switchAuthMode('register')">
+            Register / Request Access
+          </button>
+</div>
+<!-- Header Titles -->
+<div class="text-left mb-space-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-1">Welcome to DrugSafe AI</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Drug Safety Intelligence Platform • Enterprise Pharmacovigilance</p>
+</div>
+<!-- Enterprise SSO Action: IBMid with watsonx.ai integration -->
+<div class="space-y-space-md mb-space-md">
+<button class="w-full py-space-sm px-space-md rounded-lg neu-btn-raised bg-surface hover:bg-surface-container-low flex items-center justify-between text-on-surface font-headline-sm text-headline-sm font-semibold border border-white" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[#0062ff] text-[22px]">corporate_fare</span>
+<span>Continue with IBMid</span>
+</div>
+<div class="flex items-center gap-1 px-space-xs py-0.5 rounded bg-surface-container text-primary text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-[12px] text-primary">neurology</span>
+              watsonx.ai
+            </div>
+</button>
+<div class="relative flex py-1 items-center">
+<div class="flex-grow border-t border-outline-variant/50"></div>
+<span class="flex-shrink mx-space-sm font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">or enterprise credentials</span>
+<div class="flex-grow border-t border-outline-variant/50"></div>
+</div>
+</div>
+<!-- Authentication Form -->
+<form class="space-y-space-md" id="auth-form" onsubmit="event.preventDefault();">
+<!-- Conditional Field: Role Selection (Shown in Register Mode) -->
+<div class="hidden space-y-space-xs" id="role-selection-group">
+<label class="block font-headline-sm text-headline-sm text-on-surface font-medium" for="user-role">Pharmacovigilance Role Designation</label>
+<div class="relative rounded-lg neu-well-inset bg-surface-container-low">
+<select class="w-full bg-transparent border-0 py-space-sm px-space-md font-body-md text-body-md text-on-surface focus:ring-0 focus:outline-none cursor-pointer" id="user-role">
+<option value="qppv">QPPV / Qualified Person for Pharmacovigilance</option>
+<option value="safety_lead">Global Safety Lead / Medical Reviewer</option>
+<option value="regulatory">Regulatory Affairs Director (eCTD / IND)</option>
+<option value="data_science">Biostatistician &amp; AI Pharmacometrics Lead</option>
+</select>
+</div>
+</div>
+<!-- Work Email Input -->
+<div class="space-y-space-xs">
+<label class="block font-headline-sm text-headline-sm text-on-surface font-medium" for="work-email">Enterprise Work Email</label>
+<div class="relative rounded-lg neu-well-inset bg-surface-container-low flex items-center focus-within:ring-1 focus-within:ring-primary-container">
+<span class="pl-space-md text-on-surface-variant flex items-center">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</span>
+<input class="w-full bg-transparent border-0 py-space-sm px-space-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:ring-0 focus:outline-none" id="work-email" name="email" placeholder="e.g., dr.elena.rostova@pharma-safety.org" required="" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<label class="block font-headline-sm text-headline-sm text-on-surface font-medium" for="password">Master Password</label>
+<a class="font-body-sm text-body-sm text-primary hover:underline font-medium" href="#">Forgot password?</a>
+</div>
+<div class="relative rounded-lg neu-well-inset bg-surface-container-low flex items-center focus-within:ring-1 focus-within:ring-primary-container">
+<span class="pl-space-md text-on-surface-variant flex items-center">
+<span class="material-symbols-outlined text-[20px]">key</span>
+</span>
+<input class="w-full bg-transparent border-0 py-space-sm px-space-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:ring-0 focus:outline-none" id="password" name="password" placeholder="••••••••••••••••" required="" type="password"/>
+<button class="pr-space-md text-on-surface-variant hover:text-on-surface flex items-center" onclick="togglePasswordVisibility()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="password-toggle-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- GxP Session Checkbox -->
+<div class="flex items-center gap-space-sm pt-space-xs">
+<input checked="" class="w-4 h-4 text-primary-container rounded border-outline focus:ring-primary" id="remember-workstation" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface-variant cursor-pointer" for="remember-workstation">
+              Remember this workstation (GxP Compliant 12h Session)
+            </label>
+</div>
+<!-- Primary Submit Button -->
+<button class="w-full py-space-sm px-space-lg rounded-lg neu-btn-primary text-on-primary font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-space-sm mt-space-md cursor-pointer" id="submit-btn" type="submit">
+<span id="submit-text">Sign In to Safety Intelligence</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</form>
+<!-- Access note & Admin contact -->
+<div class="text-center mt-space-lg pt-space-md border-t border-outline-variant/30">
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="footer-helper-text">
+            Don't have an enterprise account? 
+            <button class="text-primary font-medium hover:underline ml-1" onclick="switchAuthMode('register')" type="button">
+              Request Access from Pharmacovigilance Admin
+            </button>
+</p>
+</div>
+</div>
+<!-- Trust and Security Compliance Notice (Strict 21 CFR Part 11) -->
+<div class="mt-space-lg max-w-md text-center flex items-center justify-center gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0">lock</span>
+<p class="font-label-sm text-label-sm leading-normal text-left">
+          Secure access restricted to authorized pharmacovigilance, medical review, and regulatory teams under 21 CFR Part 11 protocol. All logins are cryptographically logged.
+        </p>
+</div>
+</main>
+</div>
+<!-- Interactive State Handler -->
+<script>
+    let currentMode = 'signin';
+
+    function switchAuthMode(mode) {
+      currentMode = mode;
+      const tabSignIn = document.getElementById('tab-signin');
+      const tabRegister = document.getElementById('tab-register');
+      const roleGroup = document.getElementById('role-selection-group');
+      const submitText = document.getElementById('submit-text');
+      const footerHelper = document.getElementById('footer-helper-text');
+
+      if (mode === 'signin') {
+        tabSignIn.className = 'w-1/2 py-space-xs text-center font-headline-sm text-headline-sm font-semibold rounded-md bg-surface text-primary neu-btn-raised transition-all duration-150';
+        tabRegister.className = 'w-1/2 py-space-xs text-center font-headline-sm text-headline-sm font-medium rounded-md text-on-surface-variant hover:text-on-surface transition-all duration-150';
+        roleGroup.classList.add('hidden');
+        submitText.textContent = 'Sign In to Safety Intelligence';
+        footerHelper.innerHTML = 'Don\'t have an enterprise account? <button type="button" onclick="switchAuthMode(\'register\')" class="text-primary font-medium hover:underline ml-1">Request Access from Pharmacovigilance Admin</button>';
+      } else {
+        tabRegister.className = 'w-1/2 py-space-xs text-center font-headline-sm text-headline-sm font-semibold rounded-md bg-surface text-primary neu-btn-raised transition-all duration-150';
+        tabSignIn.className = 'w-1/2 py-space-xs text-center font-headline-sm text-headline-sm font-medium rounded-md text-on-surface-variant hover:text-on-surface transition-all duration-150';
+        roleGroup.classList.remove('hidden');
+        submitText.textContent = 'Submit Access Authorization Request';
+        footerHelper.innerHTML = 'Already authorized under institutional protocol? <button type="button" onclick="switchAuthMode(\'signin\')" class="text-primary font-medium hover:underline ml-1">Return to Sign In</button>';
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const passwordField = document.getElementById('password');
+      const toggleIcon = document.getElementById('password-toggle-icon');
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.textContent = 'visibility_off';
+      } else {
+        passwordField.type = 'password';
+        toggleIcon.textContent = 'visibility';
+      }
+    }
+  </script>
+</body></html>
