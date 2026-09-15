@@ -10,7 +10,7 @@
 | **Team Name** | The Atreides |
 | **Track** | AI |
 | **Team Lead** | Krina Parikh — krinaparikh227@gmail.com |
-| **Members** | Member One, Member Two |
+| **Members** | Kush Amit Shah, Ishan Shastri, Fayan Suthar |
 
 ---
 
